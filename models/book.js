@@ -7,7 +7,7 @@ const bookSchema = new mongoose.Schema({
   ISBN: { type: String, required: true, minlength: 2 },
   genre: { type: mongoose.SchemaTypes.ObjectId, ref: "author" },
 });
-bookSchema.virtual('url').get(()=>{
-    return "/catlog/book/"+this._id;
-})
-module.exports("book", bookSchema);
+bookSchema.virtual("url").get(() => {
+  return "/catlog/book/" + this._id;
+});
+module.exports = ("book", bookSchema);

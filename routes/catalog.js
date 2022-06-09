@@ -20,9 +20,9 @@ router.post("/book/update/:id");
 
 // author routes
 
-router.get("/author/create");
-router.post("/author/create");
-router.get("/authors");
+router.get("/author/create",authorController.createAuthorForm);
+router.post("/author/create",authorController.createAuthorPost);
+router.get("/authors",authorController.authorFetchAll);
 router.get("author/:id");
 router.get("/author/delete/:id");
 router.post("/author/delete/:id");
