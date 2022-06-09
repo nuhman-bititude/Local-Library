@@ -1,6 +1,8 @@
 var mongoose = require("mongoose");
 
-const bookInstanceSchema = new mongoose.Schema({
+var Schema = mongoose.Schema;
+
+var BookInstanceSchema = new Schema({
   book: { type: mongoose.SchemaTypes.ObjectId, ref: "book" },
   imprint: { type: String, required: true },
   status: {
@@ -12,8 +14,4 @@ const bookInstanceSchema = new mongoose.Schema({
   due_back: { type: Date, required: true, default: Date.now },
 });
 
-bookInstanceSchema.virtual("url").get(() => {
-  return "catalog/bookinstance/" + this._id;
-});
-
-module.exports = ("bookInstance", bookInstanceSchema);
+module.exports = mongoose.model("BookInstance", BookInstanceSchema);
