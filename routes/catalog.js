@@ -12,7 +12,7 @@ var genreController = require("../controllers/genreController");
 router.get("/book/create");
 router.post("/book/create");
 router.get("/books");
-router.get("book/:id");
+router.get("/book/:id");
 router.get("/book/delete/:id");
 router.post("/book/delete/:id");
 router.get("/book/update/:id");
@@ -31,12 +31,12 @@ router.post("/author/update/:id", authorController.authorUpdatePost);
 
 // genre routes
 
-router.get("/genre/create");
-router.post("/genre/create");
-router.get("/genres");
-router.get("genre/:id");
-router.get("/genre/delete/:id");
-router.post("/genre/delete/:id");
+router.get("/genre/create", genreController.genreCreateForm);
+router.post("/genre/create", genreController.genreCreatePost);
+router.get("/genres", genreController.genreFetchAll);
+router.get("/genre/:id", genreController.genreFetchOne);
+router.get("/genre/delete/:id", genreController.genreDeleteForm);
+router.post("/genre/delete/:id", genreController.genreDeletePost);
 router.get("/genre/update/:id");
 router.post("/genre/update/:id");
 
@@ -45,7 +45,7 @@ router.post("/genre/update/:id");
 router.get("/bookinstance/create");
 router.post("/bookinstance/create");
 router.get("/bookinstances");
-router.get("bookinstance/:id");
+router.get("/bookinstance/:id");
 router.get("/bookinstance/delete/:id");
 router.post("/bookinstance/delete/:id");
 router.get("/bookinstance/update/:id");

@@ -1,5 +1,4 @@
 var Author = require("../models/author");
-var Book = require("../models/book");
 var path = require("path");
 
 exports.authorCreateForm = (req, res, next) => {
