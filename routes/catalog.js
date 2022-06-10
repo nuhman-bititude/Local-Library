@@ -20,14 +20,14 @@ router.post("/book/update/:id");
 
 // author routes
 
-router.get("/author/create",authorController.createAuthorForm);
-router.post("/author/create",authorController.createAuthorPost);
-router.get("/authors",authorController.authorFetchAll);
-router.get("author/:id");
-router.get("/author/delete/:id");
-router.post("/author/delete/:id");
-router.get("/author/update/:id");
-router.post("/author/update/:id");
+router.get("/author/create", authorController.authorCreateForm);
+router.post("/author/create", authorController.authorCreatePost);
+router.get("/authors", authorController.authorFetchAll);
+router.get("/author/:id", authorController.authorFetchOne);
+router.get("/author/delete/:id", authorController.authorDeleteForm);
+router.post("/author/delete/:id", authorController.authorDeletePost);
+router.get("/author/update/:id", authorController.authorUpdateForm);
+router.post("/author/update/:id", authorController.authorUpdatePost);
 
 // genre routes
 
