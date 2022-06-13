@@ -8,18 +8,22 @@ exports.authorCreateForm = (req, res, next) => {
 
 exports.authorCreatePost = (req, res, next) => {
   // console.log(typeof(Author))
-  var author = new Author({
-    first_name: req.body.first_name,
-    family_name: req.body.family_name,
-    date_of_birth: req.body.date_of_birth,
-    date_of_death: req.body.date_of_death,
-  });
-  author.save(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.send(author + "<br>inserted");
-  });
+  try {
+    var author = new Author({
+      first_name: req.body.first_name,
+      family_name: req.body.family_name,
+      date_of_birth: req.body.date_of_birth,
+      date_of_death: req.body.date_of_death,
+    });
+    author.save(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.send(author + "<br>inserted");
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.authorFetchAll = (req, res, next) => {
@@ -35,34 +39,42 @@ exports.authorFetchAll = (req, res, next) => {
 
 exports.authorFetchOne = (req, res, next) => {
   id = req.params.id;
-  Author.findOne({ _id: id }).exec((err, author) => {
-    if (err) {
-      console.log(err);
-      res.error(err);
-      return;
-    }
-    res.json(author);
-  });
+  try {
+    Author.findOne({ _id: id }).exec((err, author) => {
+      if (err) {
+        console.log(err);
+        res.error(err);
+        return;
+      }
+      res.json(author);
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.authorDeleteForm = (req, res, next) => {
   id = req.params.id;
   // console.log(id)
-  Author.findOne({ _id: id }).exec((err, author) => {
-    if (err) {
-      console.log(err);
-      res.send(err);
-      return;
-    }
+  try {
+    Author.findOne({ _id: id }).exec((err, author) => {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
 
-    res.render("deleteAuthor", {
-      id: author._id,
-      first_name: author.first_name,
-      family_name: author.family_name,
-      date_of_birth: author.date_of_birth.toDateString(),
-      date_of_death: author.date_of_death.toDateString(),
+      res.render("deleteAuthor", {
+        id: author._id,
+        first_name: author.first_name,
+        family_name: author.family_name,
+        date_of_birth: author.date_of_birth.toDateString(),
+        date_of_death: author.date_of_death.toDateString(),
+      });
     });
-  });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.authorDeletePost = (req, res, next) => {
@@ -93,22 +105,26 @@ function setdate(date) {
 }
 exports.authorUpdateForm = (req, res, next) => {
   id = req.params.id;
-  Author.findOne({ _id: id }).exec((err, author) => {
-    if (err) {
-      console.log(err);
-      res.send(err);
-      return;
-    }
-    // console.log(author)
-    // console.log();
-    res.render("updateAuthor", {
-      id: author._id,
-      first_name: author.first_name,
-      family_name: author.family_name,
-      date_of_birth: setdate(author.date_of_birth),
-      date_of_death: setdate(author.date_of_death),
+  try {
+    Author.findOne({ _id: id }).exec((err, author) => {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      // console.log(author)
+      // console.log();
+      res.render("updateAuthor", {
+        id: author._id,
+        first_name: author.first_name,
+        family_name: author.family_name,
+        date_of_birth: setdate(author.date_of_birth),
+        date_of_death: setdate(author.date_of_death),
+      });
     });
-  });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.authorUpdatePost = (req, res, next) => {

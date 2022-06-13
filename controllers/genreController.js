@@ -8,15 +8,19 @@ exports.genreCreateForm = (req, res, next) => {
 
 exports.genreCreatePost = (req, res, next) => {
   // console.log(typeof(Author))
-  var genre = new Genre({
-    name: req.body.genre_name,
-  });
-  genre.save(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.send(genre + "<br>inserted");
-  });
+  try {
+    var genre = new Genre({
+      name: req.body.genre_name,
+    });
+    genre.save(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.send(genre + "<br>inserted");
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.genreFetchAll = (req, res, next) => {
@@ -32,30 +36,38 @@ exports.genreFetchAll = (req, res, next) => {
 
 exports.genreFetchOne = (req, res, next) => {
   id = req.params.id;
-  Genre.findOne({ _id: id }).exec((err, genre) => {
-    if (err) {
-      console.log(err);
-      res.error(err);
-      return;
-    }
-    res.json(genre);
-  });
+  try {
+    Genre.findOne({ _id: id }).exec((err, genre) => {
+      if (err) {
+        console.log(err);
+        res.error(err);
+        return;
+      }
+      res.json(genre);
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.genreDeleteForm = (req, res, next) => {
   id = req.params.id;
   // console.log(id)
-  Genre.findOne({ _id: id }).exec((err, genre) => {
-    if (err) {
-      console.log(err);
-      res.send(err);
-      return;
-    }
-    res.render("deleteGenre", {
-      id: genre._id,
-      genre_name: genre.name,
+  try {
+    Genre.findOne({ _id: id }).exec((err, genre) => {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      res.render("deleteGenre", {
+        id: genre._id,
+        genre_name: genre.name,
+      });
     });
-  });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.genreDeletePost = (req, res, next) => {
@@ -70,25 +82,29 @@ exports.genreDeletePost = (req, res, next) => {
       }
     });
   } catch (error) {
-    res.send(error);
+    res.send(error, { error: error });
   }
 };
 
 exports.genreUpdateForm = (req, res, next) => {
   id = req.params.id;
-  Genre.findOne({ _id: id }).exec((err, genre) => {
-    if (err) {
-      console.log(err);
-      res.send(err);
-      return;
-    }
-    // console.log(author)
-    // console.log();
-    res.render("updateGenre", {
-      id: genre._id,
-      genre_name: genre.name,
+  try {
+    Genre.findOne({ _id: id }).exec((err, genre) => {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      // console.log(author)
+      // console.log();
+      res.render("updateGenre", {
+        id: genre._id,
+        genre_name: genre.name,
+      });
     });
-  });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 exports.genreUpdatePost = (req, res, next) => {
   id = req.params.id;

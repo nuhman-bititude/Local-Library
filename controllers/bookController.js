@@ -4,12 +4,16 @@ var Genre = require("../models/genre");
 const author = require("../models/author");
 
 exports.bookCreateForm = async (req, res, next) => {
-  const authors = await Author.find();
-  const genres = await Genre.find();
-  res.render("createBook", {
-    authors: authors,
-    genres: genres,
-  });
+  try {
+    const authors = await Author.find();
+    const genres = await Genre.find();
+    res.render("createBook", {
+      authors: authors,
+      genres: genres,
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.bookCreatePost = (req, res, next) => {
@@ -34,22 +38,30 @@ exports.bookFetchAll = async (req, res, next) => {
 };
 
 exports.bookFetchOne = async (req, res, next) => {
-  id = req.params.id;
-  const book = await Book.findById(id);
-  res.send(book);
+  try {
+    id = req.params.id;
+    const book = await Book.findById(id);
+    res.send(book);
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.bookDeleteForm = async (req, res, next) => {
   id = req.params.id;
-  const book = await Book.findById(id);
-  res.render("deleteBook", {
-    id: book._id,
-    title: book.title,
-    author: book.author,
-    summary: book.summary,
-    isbn: book.ISBN,
-    genre: book.genre,
-  });
+  try {
+    const book = await Book.findById(id);
+    res.render("deleteBook", {
+      id: book._id,
+      title: book.title,
+      author: book.author,
+      summary: book.summary,
+      isbn: book.ISBN,
+      genre: book.genre,
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.bookDeletePost = (req, res, next) => {
@@ -70,19 +82,23 @@ exports.bookDeletePost = (req, res, next) => {
 
 exports.bookUpdateForm = async (req, res, next) => {
   id = req.params.id;
-  const book = await Book.findById(id);
-  const authors = await Author.find();
-  const genres = await Genre.find();
-  res.render("updateBook", {
-    id: book._id,
-    title: book.title,
-    author: book.author,
-    summary: book.summary,
-    isbn: book.ISBN,
-    genre: book.genre,
-    authors: authors,
-    genres: genres,
-  });
+  try {
+    const book = await Book.findById(id);
+    const authors = await Author.find();
+    const genres = await Genre.find();
+    res.render("updateBook", {
+      id: book._id,
+      title: book.title,
+      author: book.author,
+      summary: book.summary,
+      isbn: book.ISBN,
+      genre: book.genre,
+      authors: authors,
+      genres: genres,
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.bookUpdatePost = (req, res, next) => {

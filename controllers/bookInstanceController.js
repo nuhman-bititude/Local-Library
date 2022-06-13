@@ -4,11 +4,15 @@ const { body, validationResult } = require("express-validator");
 
 exports.bookInstanceCreateForm = async (req, res, next) => {
   id = req.params.id;
-  const book = await Book.findById(id);
-  res.render("createBookInstance", {
-    id: id,
-    book: book.title,
-  });
+  try {
+    const book = await Book.findById(id);
+    res.render("createBookInstance", {
+      id: id,
+      book: book.title,
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.bookInstanceCreatePost = (req, res, next) => {
@@ -33,8 +37,12 @@ exports.bookInstanceFetchAll = async (req, res, next) => {
 
 exports.bookInstanceFetchOne = async (req, res, next) => {
   id = req.params.id;
-  const bookInsatance = await BookInstance.findById(id);
-  res.send(bookInsatance);
+  try {
+    const bookInsatance = await BookInstance.findById(id);
+    res.send(bookInsatance);
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 function setdate(date) {
@@ -50,14 +58,18 @@ function setdate(date) {
 
 exports.bookInstanceUpdateForm = async (req, res, next) => {
   id = req.params.id;
-  const bookInsatance = await BookInstance.findById(id);
-  res.render("updateBookInstance", {
-    id: id,
-    book: bookInsatance.book,
-    imprint: bookInsatance.imprint,
-    status: bookInsatance.status,
-    due: setdate(bookInsatance.due_back),
-  });
+  try {
+    const bookInsatance = await BookInstance.findById(id);
+    res.render("updateBookInstance", {
+      id: id,
+      book: bookInsatance.book,
+      imprint: bookInsatance.imprint,
+      status: bookInsatance.status,
+      due: setdate(bookInsatance.due_back),
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 exports.bookInstanceUpdatePost = (req, res, next) => {
   id = req.params.id;
@@ -81,14 +93,18 @@ exports.bookInstanceUpdatePost = (req, res, next) => {
 
 exports.bookInstanceDeleteForm = async (req, res, next) => {
   id = req.params.id;
-  const bookInsatance = await BookInstance.findById(id);
-  res.render("deleteBookInstance", {
-    id: id,
-    book: bookInsatance.book,
-    imprint: bookInsatance.imprint,
-    status: bookInsatance.status,
-    due: setdate(bookInsatance.due_back),
-  });
+  try {
+    const bookInsatance = await BookInstance.findById(id);
+    res.render("deleteBookInstance", {
+      id: id,
+      book: bookInsatance.book,
+      imprint: bookInsatance.imprint,
+      status: bookInsatance.status,
+      due: setdate(bookInsatance.due_back),
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.bookInstanceDeletepost = (req, res, next) => {
