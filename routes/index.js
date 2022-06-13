@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   // res.render('index', { title: 'Express' });
 
-  res.send("""
+  res.send("
            /book/create
            /books
            /book/:id
@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
            /bookinstance/:id
            /bookinstance/delete/:id
            /bookinstance/update/:id
-           """)
+           ")
 });
 
 module.exports = router;
