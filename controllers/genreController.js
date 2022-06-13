@@ -40,7 +40,7 @@ exports.genreFetchOne = (req, res, next) => {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
         console.log(err);
-        res.error(err);
+        res.send(err);
         return;
       }
       res.json(genre);
