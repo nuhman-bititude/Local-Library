@@ -17,19 +17,23 @@ exports.bookCreateForm = async (req, res, next) => {
 };
 
 exports.bookCreatePost = (req, res, next) => {
-  var book = new Book({
-    title: req.body.title,
-    author: req.body.author,
-    summary: req.body.summary,
-    ISBN: req.body.isbn,
-    genre: req.body.genre,
-  });
-  book.save(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.send(book + "<br>inserted");
-  });
+  try {
+    var book = new Book({
+      title: req.body.title,
+      author: req.body.author,
+      summary: req.body.summary,
+      ISBN: req.body.isbn,
+      genre: req.body.genre,
+    });
+    book.save(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.send(book + "<br>inserted");
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.bookFetchAll = async (req, res, next) => {
@@ -76,7 +80,7 @@ exports.bookDeletePost = (req, res, next) => {
       }
     });
   } catch (error) {
-    res.send(error);
+    res.render("error", { error: error });
   }
 };
 
@@ -103,21 +107,25 @@ exports.bookUpdateForm = async (req, res, next) => {
 
 exports.bookUpdatePost = (req, res, next) => {
   id = req.params.id;
-  Book.findByIdAndUpdate(
-    id,
-    {
-      title: req.body.title,
-      author: req.body.author,
-      summary: req.body.summary,
-      ISBN: req.body.isbn,
-      genre: req.body.genre,
-    },
-    function (err, update) {
-      if (err) return res.send(err);
-      else {
-        console.log("updated Book");
-        res.send("Updated Book");
+  try {
+    Book.findByIdAndUpdate(
+      id,
+      {
+        title: req.body.title,
+        author: req.body.author,
+        summary: req.body.summary,
+        ISBN: req.body.isbn,
+        genre: req.body.genre,
+      },
+      function (err, update) {
+        if (err) return res.send(err);
+        else {
+          console.log("updated Book");
+          res.send("Updated Book");
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };

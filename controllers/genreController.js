@@ -108,17 +108,21 @@ exports.genreUpdateForm = (req, res, next) => {
 };
 exports.genreUpdatePost = (req, res, next) => {
   id = req.params.id;
-  Genre.findByIdAndUpdate(
-    id,
-    {
-      name: req.body.genre_name,
-    },
-    function (err, update) {
-      if (err) return res.send(err);
-      else {
-        console.log("updated Genre");
-        res.send("updated Genre");
+  try {
+    Genre.findByIdAndUpdate(
+      id,
+      {
+        name: req.body.genre_name,
+      },
+      function (err, update) {
+        if (err) return res.send(err);
+        else {
+          console.log("updated Genre");
+          res.send("updated Genre");
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };

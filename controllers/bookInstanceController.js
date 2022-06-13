@@ -16,18 +16,22 @@ exports.bookInstanceCreateForm = async (req, res, next) => {
 };
 
 exports.bookInstanceCreatePost = (req, res, next) => {
-  var bookInstance = new BookInstance({
-    book: req.body.book,
-    imprint: req.body.imprint,
-    status: req.body.status,
-    due_back: req.body.due,
-  });
-  bookInstance.save(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.send(bookInstance + "<br>inserted");
-  });
+  try {
+    var bookInstance = new BookInstance({
+      book: req.body.book,
+      imprint: req.body.imprint,
+      status: req.body.status,
+      due_back: req.body.due,
+    });
+    bookInstance.save(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.send(bookInstance + "<br>inserted");
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.bookInstanceFetchAll = async (req, res, next) => {
@@ -73,22 +77,26 @@ exports.bookInstanceUpdateForm = async (req, res, next) => {
 };
 exports.bookInstanceUpdatePost = (req, res, next) => {
   id = req.params.id;
-  BookInstance.findByIdAndUpdate(
-    id,
-    {
-      book: req.body.book,
-      imprint: req.body.imprint,
-      status: req.body.status,
-      due_back: req.body.due,
-    },
-    function (err, update) {
-      if (err) return res.send(err);
-      else {
-        console.log("updated BookInstance");
-        res.send("Updated Book Insatnce");
+  try {
+    BookInstance.findByIdAndUpdate(
+      id,
+      {
+        book: req.body.book,
+        imprint: req.body.imprint,
+        status: req.body.status,
+        due_back: req.body.due,
+      },
+      function (err, update) {
+        if (err) return res.send(err);
+        else {
+          console.log("updated BookInstance");
+          res.send("Updated Book Insatnce");
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
 
 exports.bookInstanceDeleteForm = async (req, res, next) => {
@@ -119,6 +127,6 @@ exports.bookInstanceDeletepost = (req, res, next) => {
       }
     });
   } catch (error) {
-    res.send(error);
+    res.render("error", { error: error });
   }
 };

@@ -89,7 +89,7 @@ exports.authorDeletePost = (req, res, next) => {
       }
     });
   } catch (error) {
-    res.send(error);
+    res.render("error", { error: error });
   }
 };
 
@@ -129,20 +129,24 @@ exports.authorUpdateForm = (req, res, next) => {
 
 exports.authorUpdatePost = (req, res, next) => {
   id = req.params.id;
-  Author.findByIdAndUpdate(
-    id,
-    {
-      first_name: req.body.first_name,
-      family_name: req.body.family_name,
-      date_of_birth: req.body.date_of_birth,
-      date_of_death: req.body.date_of_death,
-    },
-    function (err, update) {
-      if (err) return res.send(err);
-      else {
-        console.log("updated Author");
-        res.send("updated Author");
+  try {
+    Author.findByIdAndUpdate(
+      id,
+      {
+        first_name: req.body.first_name,
+        family_name: req.body.family_name,
+        date_of_birth: req.body.date_of_birth,
+        date_of_death: req.body.date_of_death,
+      },
+      function (err, update) {
+        if (err) return res.send(err);
+        else {
+          console.log("updated Author");
+          res.send("updated Author");
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    res.render("error", { error: error });
+  }
 };
