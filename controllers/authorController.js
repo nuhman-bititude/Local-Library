@@ -43,7 +43,7 @@ exports.authorFetchOne = (req, res, next) => {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
         console.log(err);
-        res.error(err);
+        res.send(err);
         return;
       }
       res.json(author);
