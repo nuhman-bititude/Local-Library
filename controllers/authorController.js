@@ -30,7 +30,7 @@ exports.authorFetchAll = (req, res, next) => {
   Author.find().exec((err, all_authors) => {
     if (err) {
       console.log(err);
-      res.render("error", { error: error });
+      res.render("error", { error: err });
       return;
     }
     res.json(all_authors);
@@ -43,8 +43,8 @@ exports.authorFetchOne = (req, res, next) => {
   try {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
-        console.log(err);
-        res.render("error", { error: error });
+        // console.log(err);
+        res.render("error", { error: err });
         return;
       }
       res.json(author);
@@ -60,7 +60,7 @@ exports.authorDeleteForm = (req, res, next) => {
   try {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
-        res.render("error", { error: error });
+        res.render("error", { error: err });
         console.log(err);
         return;
       }
@@ -110,7 +110,7 @@ exports.authorUpdateForm = (req, res, next) => {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
         console.log(err);
-        res.render("error", { error: error });
+        res.render("error", { error: err });
         return;
       }
       // console.log(author)
@@ -140,8 +140,9 @@ exports.authorUpdatePost = (req, res, next) => {
         date_of_death: req.body.date_of_death,
       },
       function (err, update) {
-        if (err) return res.send(err);
-        else {
+        if (err) {
+          res.render("error", { error: err });
+        } else {
           console.log("updated Author");
           res.send("updated Author");
         }

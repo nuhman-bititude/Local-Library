@@ -14,6 +14,7 @@ exports.genreCreatePost = (req, res, next) => {
     });
     genre.save(function (err) {
       if (err) {
+        res.render("error", { error, err });
         return next(err);
       }
       res.send(genre + "<br>inserted");
@@ -26,7 +27,7 @@ exports.genreCreatePost = (req, res, next) => {
 exports.genreFetchAll = (req, res, next) => {
   Genre.find().exec((err, all_genre) => {
     if (err) {
-      res.render("error", { error: error });
+      res.render("error", { error: err });
       console.log(err);
       return;
     }
@@ -40,7 +41,7 @@ exports.genreFetchOne = (req, res, next) => {
   try {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
-        res.render("error", { error: error });
+        res.render("error", { error: err });
         console.log(err);
         return;
       }
@@ -58,6 +59,7 @@ exports.genreDeleteForm = (req, res, next) => {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
         console.log(err);
+        res.render("error", { error: err });
         return;
       }
       res.render("deleteGenre", {
@@ -75,6 +77,7 @@ exports.genreDeletePost = (req, res, next) => {
   try {
     Genre.remove({ _id: id }, function (err, result) {
       if (err) {
+        res.render("error", { error: err });
         console.log(err);
       } else {
         res.send("Deleted");
@@ -91,6 +94,7 @@ exports.genreUpdateForm = (req, res, next) => {
   try {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
+        res.render("error", { error: err });
         console.log(err);
         return;
       }
@@ -114,8 +118,10 @@ exports.genreUpdatePost = (req, res, next) => {
         name: req.body.genre_name,
       },
       function (err, update) {
-        if (err) return res.send(err);
-        else {
+        if (err) {
+          res.render("error", { error: err });
+          return;
+        } else {
           console.log("updated Genre");
           res.send("updated Genre");
         }
