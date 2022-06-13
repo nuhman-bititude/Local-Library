@@ -8,4 +8,4 @@ var GenreSchema = new Schema({
 // GenreSchema.virtual("url").get(() => {
 //   return "catalog/genre/" + this._id;
 // });
-module.exports = mongoose.model("Book", GenreSchema);
+module.exports = mongoose.model("Genre", GenreSchema);

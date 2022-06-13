@@ -124,8 +124,8 @@ exports.authorUpdatePost = (req, res, next) => {
     function (err, update) {
       if (err) return res.send(err);
       else {
-        console.log("updated User");
-        res.send("updated User");
+        console.log("updated Author");
+        res.send("updated Author");
       }
     }
   );

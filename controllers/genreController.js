@@ -76,7 +76,7 @@ exports.genreDeletePost = (req, res, next) => {
 
 exports.genreUpdateForm = (req, res, next) => {
   id = req.params.id;
-  Author.findOne({ _id: id }).exec((err, author) => {
+  Genre.findOne({ _id: id }).exec((err, genre) => {
     if (err) {
       console.log(err);
       res.send(err);
@@ -84,12 +84,25 @@ exports.genreUpdateForm = (req, res, next) => {
     }
     // console.log(author)
     // console.log();
-    res.render("updateAuthor", {
-      id: author._id,
-      first_name: author.first_name,
-      family_name: author.family_name,
-      date_of_birth: setdate(author.date_of_birth),
-      date_of_death: setdate(author.date_of_death),
+    res.render("updateGenre", {
+      id: genre._id,
+      genre_name: genre.name,
     });
   });
+};
+exports.genreUpdatePost = (req, res, next) => {
+  id = req.params.id;
+  Genre.findByIdAndUpdate(
+    id,
+    {
+      name: req.body.genre_name,
+    },
+    function (err, update) {
+      if (err) return res.send(err);
+      else {
+        console.log("updated Genre");
+        res.send("updated Genre");
+      }
+    }
+  );
 };

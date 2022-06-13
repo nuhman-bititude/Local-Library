@@ -9,7 +9,7 @@ var genreController = require("../controllers/genreController");
 
 // book routes
 
-router.get("/book/create");
+router.get("/book/create", bookController.bookCreateForm);
 router.post("/book/create");
 router.get("/books");
 router.get("/book/:id");
@@ -37,8 +37,8 @@ router.get("/genres", genreController.genreFetchAll);
 router.get("/genre/:id", genreController.genreFetchOne);
 router.get("/genre/delete/:id", genreController.genreDeleteForm);
 router.post("/genre/delete/:id", genreController.genreDeletePost);
-router.get("/genre/update/:id");
-router.post("/genre/update/:id");
+router.get("/genre/update/:id", genreController.genreUpdateForm);
+router.post("/genre/update/:id", genreController.genreUpdatePost);
 
 // bookinstance routes
 
