@@ -26,6 +26,7 @@ exports.genreCreatePost = (req, res, next) => {
 exports.genreFetchAll = (req, res, next) => {
   Genre.find().exec((err, all_genre) => {
     if (err) {
+      res.render("error", { error: error });
       console.log(err);
       return;
     }
@@ -39,6 +40,7 @@ exports.genreFetchOne = (req, res, next) => {
   try {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
+        res.render("error", { error: error });
         console.log(err);
         return;
       }

@@ -30,6 +30,7 @@ exports.authorFetchAll = (req, res, next) => {
   Author.find().exec((err, all_authors) => {
     if (err) {
       console.log(err);
+      res.render("error", { error: error });
       return;
     }
     res.json(all_authors);
@@ -43,6 +44,7 @@ exports.authorFetchOne = (req, res, next) => {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
         console.log(err);
+        res.render("error", { error: error });
         return;
       }
       res.json(author);
@@ -58,6 +60,7 @@ exports.authorDeleteForm = (req, res, next) => {
   try {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
+        res.render("error", { error: error });
         console.log(err);
         return;
       }
@@ -107,7 +110,7 @@ exports.authorUpdateForm = (req, res, next) => {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
         console.log(err);
-        res.send(err);
+        res.render("error", { error: error });
         return;
       }
       // console.log(author)
