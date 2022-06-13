@@ -4,10 +4,10 @@ var Schema = mongoose.Schema;
 
 var BookSchema = new Schema({
   title: { type: String, required: true, minlength: 3 },
-  author: { type: mongoose.SchemaTypes.ObjectId, ref: "author" },
+  author: { type: String, required: true, minlength: 3 },
   summary: { type: String, required: true, minlength: 2 },
   ISBN: { type: String, required: true, minlength: 2 },
-  genre: { type: mongoose.SchemaTypes.ObjectId, ref: "author" },
+  genre: { type: String, required: true, minlength: 3 },
 });
 
 module.exports = mongoose.model("Book", BookSchema);
