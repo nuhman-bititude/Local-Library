@@ -14,8 +14,8 @@ exports.genreCreatePost = (req, res, next) => {
     });
     genre.save(function (err) {
       if (err) {
-        res.render("error", { error, err });
-        return next(err);
+        res.render("error", { error: err });
+        return;
       }
       res.send(genre + "<br>inserted");
     });
