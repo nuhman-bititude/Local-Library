@@ -43,7 +43,6 @@ exports.authorFetchOne = (req, res, next) => {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
         console.log(err);
-        res.send(err);
         return;
       }
       res.json(author);
@@ -60,7 +59,6 @@ exports.authorDeleteForm = (req, res, next) => {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
         console.log(err);
-        res.send(err);
         return;
       }
 

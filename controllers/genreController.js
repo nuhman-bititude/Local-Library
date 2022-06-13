@@ -40,7 +40,6 @@ exports.genreFetchOne = (req, res, next) => {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
         console.log(err);
-        res.send(err);
         return;
       }
       res.json(genre);
@@ -57,7 +56,6 @@ exports.genreDeleteForm = (req, res, next) => {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
         console.log(err);
-        res.send(err);
         return;
       }
       res.render("deleteGenre", {
@@ -92,7 +90,6 @@ exports.genreUpdateForm = (req, res, next) => {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
         console.log(err);
-        res.send(err);
         return;
       }
       // console.log(author)
