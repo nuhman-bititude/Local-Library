@@ -50,7 +50,7 @@ exports.authorFetchOne = (req, res, next) => {
       res.json(author);
     });
   } catch (error) {
-    res.render("error", { error: error });
+    res.json('error')
   }
 };
 
@@ -74,7 +74,7 @@ exports.authorDeleteForm = (req, res, next) => {
       });
     });
   } catch (error) {
-    res.render("error", { error: error });
+    res.json('error')
   }
 };
 
@@ -90,7 +90,7 @@ exports.authorDeletePost = (req, res, next) => {
       }
     });
   } catch (error) {
-    res.render("error", { error: error });
+    res.json('error')
   }
 };
 
@@ -124,7 +124,7 @@ exports.authorUpdateForm = (req, res, next) => {
       });
     });
   } catch (error) {
-    res.render("error", { error: error });
+    res.json('error')
   }
 };
 
@@ -149,6 +149,6 @@ exports.authorUpdatePost = (req, res, next) => {
       }
     );
   } catch (error) {
-    res.render("error", { error: error });
+    res.json('error')
   }
 };
