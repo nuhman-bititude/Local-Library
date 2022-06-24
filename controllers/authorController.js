@@ -17,7 +17,7 @@ exports.authorCreatePost = (req, res, next) => {
     });
     author.save(function (err) {
       if (err) {
-        return next(err);
+        res.json('error')
       }
       res.send(author + "<br>inserted");
     });
@@ -29,8 +29,7 @@ exports.authorCreatePost = (req, res, next) => {
 exports.authorFetchAll = (req, res, next) => {
   Author.find().exec((err, all_authors) => {
     if (err) {
-      console.log(err);
-      res.render("error", { error: err });
+res.json('error')
       return;
     }
     res.json(all_authors);
@@ -43,8 +42,7 @@ exports.authorFetchOne = (req, res, next) => {
   try {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
-        // console.log(err);
-        res.render("error", { error: err });
+res.json('error')
         return;
       }
       res.json(author);
@@ -60,8 +58,7 @@ exports.authorDeleteForm = (req, res, next) => {
   try {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
-        res.render("error", { error: err });
-        console.log(err);
+res.json('error')
         return;
       }
 
@@ -83,7 +80,7 @@ exports.authorDeletePost = (req, res, next) => {
   try {
     Author.remove({ _id: id }, function (err, result) {
       if (err) {
-        console.log(err);
+res.json('error')
       } else {
         res.send("Deleted");
         console.log("Result :", result);
@@ -109,8 +106,7 @@ exports.authorUpdateForm = (req, res, next) => {
   try {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
-        console.log(err);
-        res.render("error", { error: err });
+res.json('error')
         return;
       }
       // console.log(author)
@@ -141,7 +137,7 @@ exports.authorUpdatePost = (req, res, next) => {
       },
       function (err, update) {
         if (err) {
-          res.render("error", { error: err });
+         res.json('error')
         } else {
           console.log("updated Author");
           res.send("updated Author");
