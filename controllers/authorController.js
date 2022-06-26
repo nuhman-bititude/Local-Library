@@ -19,7 +19,7 @@ exports.authorCreatePost = (req, res, next) => {
       if (err) {
         res.json(err)
       }
-      res.json('success');
+      res.send('success');
     });
   } catch (error) {
     res.render("error", { error: error });
