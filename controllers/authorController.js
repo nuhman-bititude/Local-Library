@@ -6,39 +6,39 @@ exports.authorCreateForm = (req, res, next) => {
   res.sendFile(path.resolve("public/createAuthor.html"));
 };
 
-// exports.authorCreatePost = (req, res, next) => {
-//   // console.log(typeof(Author))
-//   try {
-//     var author = new Author({
-//       first_name: req.body.first_name,
-//       family_name: req.body.family_name,
-//       date_of_birth: req.body.date_of_birth,
-//       date_of_death: req.body.date_of_death,
-//     });
-//     author.save(function (err) {
-//       if (err) {
-//         res.json(err)
-//       }
-//       res.send('success');
-//     });
-//   } catch (error) {
-//     res.render("error", { error: error });
-//   }
-// };
-
-
-exports.authorCreatePost = async function (req, res) { 
-    const author = new Author({
+exports.authorCreatePost = (req, res, next) => {
+  // console.log(typeof(Author))
+  try {
+    var author = new Author({
       first_name: req.body.first_name,
       family_name: req.body.family_name,
       date_of_birth: req.body.date_of_birth,
       date_of_death: req.body.date_of_death,
+    });
+    author.save(function (err) {
+      if (err) {
+        res.json(err)
+      }
+      res.send('success');
+    });
+  } catch (error) {
+    res.render("error", { error: error });
+  }
+};
 
 
-    })
-    const responce = await author.save()
-    res.json(responce)
-}
+// exports.authorCreatePost = async function (req, res) { 
+//     const author = new Author({
+//       first_name: req.body.first_name,
+//       family_name: req.body.family_name,
+//       date_of_birth: req.body.date_of_birth,
+//       date_of_death: req.body.date_of_death,
+
+
+//     })
+//     const responce = await author.save()
+//     res.json(responce)
+// }
 
 exports.authorFetchAll = (req, res, next) => {
   Author.find().exec((err, all_authors) => {
