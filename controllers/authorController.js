@@ -17,9 +17,9 @@ exports.authorCreatePost = (req, res, next) => {
     });
     author.save(function (err) {
       if (err) {
-        res.json('error')
+        res.json(err)
       }
-      res.send(author + "<br>inserted");
+      res.json('success');
     });
   } catch (error) {
     res.render("error", { error: error });
@@ -80,7 +80,7 @@ exports.authorDeletePost = (req, res, next) => {
   try {
     Author.remove({ _id: id }, function (err, result) {
       if (err) {
-res.json('error')
+res.json(err)
       } else {
         res.send("Deleted");
         console.log("Result :", result);
@@ -106,7 +106,7 @@ exports.authorUpdateForm = (req, res, next) => {
   try {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
-res.json('error')
+res.json(err)
         return;
       }
       // console.log(author)
@@ -137,7 +137,7 @@ exports.authorUpdatePost = (req, res, next) => {
       },
       function (err, update) {
         if (err) {
-         res.json('error')
+         res.json(err)
         } else {
           console.log("updated Author");
           res.send("updated Author");
