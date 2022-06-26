@@ -10,6 +10,7 @@ exports.authorCreatePost = (req, res, next) => {
   // console.log(typeof(Author))
   try {
     var author = new Author({
+      console.log(req)
       first_name: req.body.first_name,
       family_name: req.body.family_name,
       date_of_birth: req.body.date_of_birth,
