@@ -10,7 +10,7 @@ exports.authorCreatePost = (req, res, next) => {
   // console.log(typeof(Author))
   console.log(req.body);
   res.send(req);
-  try {
+//   try {
     var author = new Author({
       first_name: req.body.first_name,
       family_name: req.body.family_name,
@@ -24,11 +24,11 @@ exports.authorCreatePost = (req, res, next) => {
       }
       res.json("success");
     });
-  } catch (error) {
+//   } catch (error) {
 //     res.render("error", { error: error });
-    console.log(error);
-  }
-};
+//     console.log(error);
+//   }
+// };
 
 
 exports.authorFetchAll = (req, res, next) => {
