@@ -22,25 +22,14 @@ exports.authorCreatePost = (req, res, next) => {
         res.json(err);
         console.log(err);
       }
-      res.send("success");
+      res.json("success");
     });
   } catch (error) {
-    res.render("error", { error: error });
+//     res.render("error", { error: error });
     console.log(error);
   }
 };
 
-// exports.authorCreatePost = async function (req, res) {
-//     const author = new Author({
-//       first_name: req.body.first_name,
-//       family_name: req.body.family_name,
-//       date_of_birth: req.body.date_of_birth,
-//       date_of_death: req.body.date_of_death,
-
-//     })
-//     const responce = await author.save()
-//     res.json(responce)
-// }
 
 exports.authorFetchAll = (req, res, next) => {
   Author.find().exec((err, all_authors) => {
