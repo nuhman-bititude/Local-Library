@@ -8,10 +8,10 @@ exports.authorCreateForm = (req, res, next) => {
 
 exports.authorCreatePost = (req, res, next) => {
   // console.log(typeof(Author))
-  console.log(req)
+  console.log(req.body);
+  res.send(req);
   try {
     var author = new Author({
-      
       first_name: req.body.first_name,
       family_name: req.body.family_name,
       date_of_birth: req.body.date_of_birth,
@@ -19,23 +19,23 @@ exports.authorCreatePost = (req, res, next) => {
     });
     author.save(function (err) {
       if (err) {
-        res.json(err)
+        res.json(err);
+        console.log(err);
       }
-      res.send('success');
+      res.send("success");
     });
   } catch (error) {
     res.render("error", { error: error });
+    console.log(error);
   }
 };
 
-
-// exports.authorCreatePost = async function (req, res) { 
+// exports.authorCreatePost = async function (req, res) {
 //     const author = new Author({
 //       first_name: req.body.first_name,
 //       family_name: req.body.family_name,
 //       date_of_birth: req.body.date_of_birth,
 //       date_of_death: req.body.date_of_death,
-
 
 //     })
 //     const responce = await author.save()
@@ -45,7 +45,7 @@ exports.authorCreatePost = (req, res, next) => {
 exports.authorFetchAll = (req, res, next) => {
   Author.find().exec((err, all_authors) => {
     if (err) {
-res.json('error')
+      res.json("error");
       return;
     }
     res.json(all_authors);
@@ -58,13 +58,13 @@ exports.authorFetchOne = (req, res, next) => {
   try {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
-res.json('error')
+        res.json("error");
         return;
       }
       res.json(author);
     });
   } catch (error) {
-    res.json('error')
+    res.json("error");
   }
 };
 
@@ -74,7 +74,7 @@ exports.authorDeleteForm = (req, res, next) => {
   try {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
-res.json('error')
+        res.json("error");
         return;
       }
 
@@ -87,7 +87,7 @@ res.json('error')
       });
     });
   } catch (error) {
-    res.json('error')
+    res.json("error");
   }
 };
 
@@ -96,14 +96,14 @@ exports.authorDeletePost = (req, res, next) => {
   try {
     Author.remove({ _id: id }, function (err, result) {
       if (err) {
-res.json(err)
+        res.json(err);
       } else {
         res.send("Deleted");
         console.log("Result :", result);
       }
     });
   } catch (error) {
-    res.json('error')
+    res.json("error");
   }
 };
 
@@ -122,7 +122,7 @@ exports.authorUpdateForm = (req, res, next) => {
   try {
     Author.findOne({ _id: id }).exec((err, author) => {
       if (err) {
-res.json(err)
+        res.json(err);
         return;
       }
       // console.log(author)
@@ -136,7 +136,7 @@ res.json(err)
       });
     });
   } catch (error) {
-    res.json('error')
+    res.json("error");
   }
 };
 
@@ -153,7 +153,7 @@ exports.authorUpdatePost = (req, res, next) => {
       },
       function (err, update) {
         if (err) {
-         res.json(err)
+          res.json(err);
         } else {
           console.log("updated Author");
           res.send("updated Author");
@@ -161,6 +161,6 @@ exports.authorUpdatePost = (req, res, next) => {
       }
     );
   } catch (error) {
-    res.json('error')
+    res.json("error");
   }
 };
