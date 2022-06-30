@@ -25,12 +25,13 @@ exports.bookInstanceCreatePost = (req, res, next) => {
     });
     bookInstance.save(function (err) {
       if (err) {
+        res.json("error");
         return next(err);
       }
       res.send(bookInstance + "<br>inserted");
     });
   } catch (error) {
-    res.render("error", { error: error });
+    res.json("error");
   }
 };
 
@@ -45,7 +46,7 @@ exports.bookInstanceFetchOne = async (req, res, next) => {
     const bookInsatance = await BookInstance.findById(id);
     res.send(bookInsatance);
   } catch (error) {
-    res.render("error", { error: error });
+    res.json("error");
   }
 };
 
@@ -87,7 +88,7 @@ exports.bookInstanceUpdatePost = (req, res, next) => {
         due_back: req.body.due,
       },
       function (err, update) {
-        if (err) return res.send(err);
+        if (err) return res.json("error");
         else {
           console.log("updated BookInstance");
           res.send("Updated Book Insatnce");
@@ -95,7 +96,7 @@ exports.bookInstanceUpdatePost = (req, res, next) => {
       }
     );
   } catch (error) {
-    res.render("error", { error: error });
+    res.json("error");
   }
 };
 
@@ -120,6 +121,7 @@ exports.bookInstanceDeletepost = (req, res, next) => {
   try {
     BookInstance.remove({ _id: id }, function (err, result) {
       if (err) {
+        res.json("error");
         console.log(err);
       } else {
         res.send("Deleted");
@@ -127,6 +129,6 @@ exports.bookInstanceDeletepost = (req, res, next) => {
       }
     });
   } catch (error) {
-    res.render("error", { error: error });
+    res.json("error");
   }
 };

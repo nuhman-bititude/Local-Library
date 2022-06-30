@@ -27,11 +27,13 @@ exports.bookCreatePost = (req, res, next) => {
     });
     book.save(function (err) {
       if (err) {
+        res.json("error");
         return next(err);
       }
-      res.send(book + "<br>inserted");
+      res.json("success");
     });
   } catch (error) {
+    res.json("error");
     res.render("error", { error: error });
   }
 };
@@ -47,7 +49,7 @@ exports.bookFetchOne = async (req, res, next) => {
     const book = await Book.findById(id);
     res.send(book);
   } catch (error) {
-    res.render("error", { error: error });
+    res.json("error");
   }
 };
 
@@ -74,13 +76,14 @@ exports.bookDeletePost = (req, res, next) => {
     Book.remove({ _id: id }, function (err, result) {
       if (err) {
         console.log(err);
+        res.json("error");
       } else {
         res.send("Deleted");
         console.log("Result :", result);
       }
     });
   } catch (error) {
-    res.render("error", { error: error });
+    res.json("error");
   }
 };
 
@@ -118,14 +121,14 @@ exports.bookUpdatePost = (req, res, next) => {
         genre: req.body.genre,
       },
       function (err, update) {
-        if (err) return res.send(err);
+        if (err) return res.json("error");
         else {
           console.log("updated Book");
-          res.send("Updated Book");
+          res.json("success");
         }
       }
     );
   } catch (error) {
-    res.render("error", { error: error });
+    res.json("error");
   }
 };

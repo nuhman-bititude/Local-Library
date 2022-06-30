@@ -9,8 +9,7 @@ exports.authorCreateForm = (req, res, next) => {
 exports.authorCreatePost = (req, res, next) => {
   // console.log(typeof(Author))
   console.log(req.body);
-  res.send(req);
-//   try {
+  try {
     var author = new Author({
       first_name: req.body.first_name,
       family_name: req.body.family_name,
@@ -24,12 +23,11 @@ exports.authorCreatePost = (req, res, next) => {
       }
       res.json("success");
     });
-//   } catch (error) {
-//     res.render("error", { error: error });
-//     console.log(error);
-//   }
-// };
-
+  } catch (error) {
+    res.render("error", { error: error });
+    console.log(error);
+  }
+};
 
 exports.authorFetchAll = (req, res, next) => {
   Author.find().exec((err, all_authors) => {
@@ -114,8 +112,6 @@ exports.authorUpdateForm = (req, res, next) => {
         res.json(err);
         return;
       }
-      // console.log(author)
-      // console.log();
       res.render("updateAuthor", {
         id: author._id,
         first_name: author.first_name,
@@ -144,6 +140,7 @@ exports.authorUpdatePost = (req, res, next) => {
         if (err) {
           res.json(err);
         } else {
+          // console.log(req.body);
           console.log("updated Author");
           res.send("updated Author");
         }

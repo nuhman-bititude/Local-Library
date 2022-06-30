@@ -15,12 +15,14 @@ exports.genreCreatePost = (req, res, next) => {
     genre.save(function (err) {
       if (err) {
         res.render("error", { error: err });
+        res.json("error");
         return;
       }
       res.send(genre + "<br>inserted");
     });
   } catch (error) {
     res.render("error", { error: error });
+    res.json("error");
   }
 };
 
@@ -28,6 +30,7 @@ exports.genreFetchAll = (req, res, next) => {
   Genre.find().exec((err, all_genre) => {
     if (err) {
       res.render("error", { error: err });
+      res.json("error");
       console.log(err);
       return;
     }
@@ -41,14 +44,14 @@ exports.genreFetchOne = (req, res, next) => {
   try {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
-        res.render("error", { error: err });
+        res.json("error");
         console.log(err);
         return;
       }
       res.json(genre);
     });
   } catch (error) {
-    res.render("error", { error: error });
+    res.json("error");
   }
 };
 
@@ -59,6 +62,7 @@ exports.genreDeleteForm = (req, res, next) => {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
         console.log(err);
+        res.json("error");
         res.render("error", { error: err });
         return;
       }
@@ -77,7 +81,7 @@ exports.genreDeletePost = (req, res, next) => {
   try {
     Genre.remove({ _id: id }, function (err, result) {
       if (err) {
-        res.render("error", { error: err });
+        res.json("error");
         console.log(err);
       } else {
         res.send("Deleted");
@@ -86,6 +90,7 @@ exports.genreDeletePost = (req, res, next) => {
     });
   } catch (error) {
     res.send(error, { error: error });
+    res.json("error");
   }
 };
 
@@ -94,7 +99,7 @@ exports.genreUpdateForm = (req, res, next) => {
   try {
     Genre.findOne({ _id: id }).exec((err, genre) => {
       if (err) {
-        res.render("error", { error: err });
+        res.json("error");
         console.log(err);
         return;
       }
@@ -119,7 +124,7 @@ exports.genreUpdatePost = (req, res, next) => {
       },
       function (err, update) {
         if (err) {
-          res.render("error", { error: err });
+          res.json("error");
           return;
         } else {
           console.log("updated Genre");
@@ -128,6 +133,6 @@ exports.genreUpdatePost = (req, res, next) => {
       }
     );
   } catch (error) {
-    res.render("error", { error: error });
+    res.json("error");
   }
 };
