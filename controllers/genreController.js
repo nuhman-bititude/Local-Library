@@ -14,8 +14,7 @@ exports.genreCreatePost = (req, res, next) => {
     });
     genre.save(function (err) {
       if (err) {
-        res.render("error", { error: err });
-        res.json("error");
+        res.status(404).json({ errors });
         return;
       }
       res.send(genre + "<br>inserted");
@@ -29,8 +28,7 @@ exports.genreCreatePost = (req, res, next) => {
 exports.genreFetchAll = (req, res, next) => {
   Genre.find().exec((err, all_genre) => {
     if (err) {
-      res.render("error", { error: err });
-      res.json("error");
+      res.status(404).json({ errors });
       console.log(err);
       return;
     }
@@ -81,7 +79,7 @@ exports.genreDeletePost = (req, res, next) => {
   try {
     Genre.remove({ _id: id }, function (err, result) {
       if (err) {
-        res.json("error");
+        res.status(404).json({ errors });
         console.log(err);
       } else {
         res.send("Deleted");
@@ -124,7 +122,7 @@ exports.genreUpdatePost = (req, res, next) => {
       },
       function (err, update) {
         if (err) {
-          res.json("error");
+          res.status(404).json({ errors });
           return;
         } else {
           console.log("updated Genre");
