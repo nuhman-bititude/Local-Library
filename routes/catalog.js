@@ -7,7 +7,7 @@ var bookController = require("../controllers/bookController");
 var authorController = require("../controllers/authorController");
 var bookInstanceController = require("../controllers/bookInstanceController");
 var genreController = require("../controllers/genreController");
-
+var userController = require("../controllers/userController");
 // book routes
 
 router.get("/book/create", bookController.bookCreateForm);
@@ -110,6 +110,40 @@ router.get(
 router.post(
   "/bookinstance/update/:id",
   bookInstanceController.bookInstanceUpdatePost
+);
+
+// user
+
+router.post(
+  "/user/signup",
+  body("name").isLength({ min: 3 }),
+  body("email").isLength({ min: 3 }),
+  body("password").isLength({ min: 3 }),
+  userController.userCreate
+);
+router.post(
+  "/login",
+  body("email").isLength({ min: 3 }),
+  body("password").isLength({ min: 3 }),
+  userController.userFetchOne
+);
+router.get("/users", userController.userFetchAll);
+// router.get("/genres", genreController.genreFetchAll);
+
+// admin
+router.post(
+  "/admin/signup",
+  body("name").isLength({ min: 3 }),
+  body("email").isLength({ min: 3 }),
+  body("password").isLength({ min: 3 }),
+  userController.adminCreate
+);
+
+router.post(
+  "/admin/login",
+  body("email").isLength({ min: 3 }),
+  body("password").isLength({ min: 3 }),
+  userController.adminFetchOne
 );
 
 module.exports = router;
