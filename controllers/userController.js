@@ -1,15 +1,20 @@
 var Users = require("../models/users");
-
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 exports.userCreate = async (req, res, next) => {
   try {
     const user = await Users.findOne({ email: req.body.email.toLowerCase() });
     if (user) {
       return res.status(400).send({ message: "User Already exist" });
     }
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(req.body.password, salt);
+
     const newUser = new Users({
       name: req.body.name,
       email: req.body.email.toLowerCase(),
-      password: req.body.password,
+      password: hashPassword,
       type: "user",
     });
     newUser.save(function (err) {
@@ -39,41 +44,32 @@ exports.userFetchAll = (req, res, next) => {
 };
 
 exports.userFetchOne = async (req, res, next) => {
-  let email = req.body.email.toLowerCase();
-  let password = req.body.password;
   try {
-    const user = await Users.find({ email: email });
+    const email = req.body.email.toLowerCase();
+    const password = req.body.password;
+    const user = await Users.findOne({ email: email });
     if (!user) {
-      return res.status(401).send({ message: "User not Found" });
+      return res.status(401).send("User not Found");
     }
-    const validPassword = await Users.findOne({ email, password });
+    const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      res.status(401).send({ message: "wrong password" });
+      return res.status(401).send("Invalid Password");
     }
-    const token = await Users.generateAuthToken();
-    res.status(200).send({ data: token, message: "login success" });
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
+    res
+      .status(200)
+      .json({
+        email: user.email,
+        name: user.name,
+        userType: user.user_type,
+        token: token,
+      });
   } catch (error) {
     console.log(error);
-    // res.status(500).send({ message: "Internal server error" });
+    //TODO:Handle error res.status(500).send({ message: "Internal server error" });
+    res.status(404).send(error);
   }
 };
-// exports.userFetchOne = async (req, res, next) => {
-//   let email = req.body.email;
-//   let password = req.body.password;
-//   const data = await Users.findOne({ email: email });
-//   if (data === null) res.json("no user found");
-//   else {
-//     if (
-//       data.email === email &&
-//       data.password === password &&
-//       data.user_type === "user"
-//     )
-//       res.json(true);
-//     else {
-//       res.json("wrong password");
-//     }
-//   }
-// };
 
 exports.adminCreate = (req, res, next) => {
   try {

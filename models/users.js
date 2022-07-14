@@ -16,13 +16,10 @@ var UsersSchema = new Schema({
     enum: ["admin", "user"],
     default: "user",
   },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-auth = UsersSchema.methods.generateAuthToken = () => {
-  const token = jwt.sign({ id: this._id }, process.env.JWTPRIVATEKET, {
-    expiresIn: "1d",
-  });
-  return token;
-};
-module.exports = auth;
 module.exports = mongoose.model("Users", UsersSchema);
